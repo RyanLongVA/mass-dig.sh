@@ -2,7 +2,7 @@
 
 PARALLEL=25
 
-function dig_host {
+dig_host () {
   if [ -z "$1" ]; then
     echo "[!] invalid args for dig_host"
     exit 1
@@ -39,4 +39,4 @@ fi
 file=$1
 
 echo "[*] scanning domains from $file en masse"
-cat $file | xargs -P $PARALLEL -I '{}' sh -c 'dig_host {}'
+cat $file | xargs -P $PARALLEL -I {} bash -c 'dig_host "$@"' _ {}

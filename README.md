@@ -9,6 +9,7 @@ Presence of an A record can be used for TLD enumeration
 
 ## how
 `./mass-dig.sh [TLD LIST] [THREADS (OPTIONAL)]`
+Do not try to run with 'sh mass-dig.sh' there will likely be a syntax issue
 
 The TLD list should be newline separated, I.E
 ```
