@@ -11,7 +11,7 @@ dig_host () {
 
   res=$(dig "$host" +short | tr '\n' , 2> /dev/null)
   res=${res%?};
-  if [[ $res == *"dig:"* ]] || [ -z "$res" ]; then 
+  if [[ $res == *"connection timed out"* ]] || [ -z "$res" ]; then 
     return
   else  
     echo "$host : $res"
