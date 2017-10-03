@@ -9,14 +9,12 @@ dig_host () {
   fi
   host=$1
 
-  echo "[*] digging host $host"
-  res=$(dig "$host" ANY +noall +answer | grep -v "^;" | grep -v "^$")
-  if [ -z "$res" ]; then
-    echo "[*] result for host $host was empty"
-  else
-    echo "[*] result found for host $host"
-    echo "$res" > "${host}.dug"
-    echo "$host" >> "found_hosts.dug"
+  res=$(dig "$host" +short | tr '\n' , 2> /dev/null)
+  res=${res%?};
+  if [[ $res == *"dig:"* ]] || [ -z "$res" ]; then 
+    return
+  else  
+    echo "$host : $res"
   fi
 }
 
@@ -38,5 +36,4 @@ fi
 
 file=$1
 
-echo "[*] scanning domains from $file en masse"
 cat $file | xargs -P $PARALLEL -I {} bash -c 'dig_host "$@"' _ {}
